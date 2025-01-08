@@ -1,7 +1,7 @@
 -- open src script --
 -- Simple script version --
--- Map:The $1,000,000 Glass Bridge - https://www.roblox.com/games/87854376962069/The-1-000-000-Glass-Bridge --
-
+-- Map : The $1,000,000 Glass Bridge - https://www.roblox.com/games/87854376962069/The-1-000-000-Glass-Bridge --
+-- script : loadstring(game:HttpGet('https://raw.githubusercontent.com/Anonymus555-png/Value-hub/refs/heads/main/The%20%241%2C000%2C000%20Glass%20Bridge%20script'))() --
 local allowedPlaceId = 87854376962069 -- Place ID ของแมพที่อนุญาต
 
 if game.PlaceId ~= allowedPlaceId then
