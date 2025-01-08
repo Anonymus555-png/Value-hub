@@ -1,0 +1,249 @@
+-- open src script --
+-- Simple script version --
+-- Map:The $1,000,000 Glass Bridge - https://www.roblox.com/games/87854376962069/The-1-000-000-Glass-Bridge --
+
+local allowedPlaceId = 87854376962069 -- Place ID ของแมพที่อนุญาต
+
+if game.PlaceId ~= allowedPlaceId then
+    local player = game.Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+
+    player:Kick("you are not in the correct Place ID / รันให้ถูกแมพ i ควาย")
+end  
+
+
+
+
+local colors = {
+    SchemeColor = Color3.fromRGB(27, 79, 114),
+    Background = Color3.fromRGB(39, 55, 70),
+    Header = Color3.fromRGB(27, 38, 49 ),
+    TextColor = Color3.fromRGB(255,255,255),
+    ElementColor = Color3.fromRGB(93, 173, 226)
+}
+
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("VALUE HUB", colors)
+
+local Tab = Window:NewTab("Main")
+local Section = Tab:NewSection("Get Money")
+
+Section:NewButton("Get 2500$", "2500$ for 1 click", function()
+    local args = {
+        [1] = "2500"
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("CratesUtilities"):WaitForChild("Remotes"):WaitForChild("GiveReward"):FireServer(unpack(args))
+
+end)
+
+Section:NewButton("Get 5000$", "5000$ for 1 click", function()
+    local args = {
+        [1] = "5000"
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("CratesUtilities"):WaitForChild("Remotes"):WaitForChild("GiveReward"):FireServer(unpack(args))
+
+end)
+
+Section:NewButton("Get 10000$", "10000$ for 1 click", function()
+    local args = {
+        [1] = "10000"
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("CratesUtilities"):WaitForChild("Remotes"):WaitForChild("GiveReward"):FireServer(unpack(args))
+
+end)
+
+Section:NewButton("Get 100000$", "100000$ for 1 click", function()
+    local args = {
+        [1] = "100000"
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("CratesUtilities"):WaitForChild("Remotes"):WaitForChild("GiveReward"):FireServer(unpack(args))
+
+end)
+
+Section:NewButton("Get 1M ", "1M for 1 click", function()
+    local args = {
+        [1] = "1000000"
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("CratesUtilities"):WaitForChild("Remotes"):WaitForChild("GiveReward"):FireServer(unpack(args))
+
+end)
+
+_G.AutoGetMoney = false
+
+Section:NewToggle("Auto Get money 100k / 1s", "100000$ in 1s", function(state)
+    if state then
+        _G.AutoGetMoney = true
+        while _G.AutoGetMoney do
+        local args = {
+            [1] = game:GetService("Players").LocalPlayer
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("GiveClaimMoney"):FireServer(unpack(args))
+        wait(0.1)
+end
+    else
+        _G.AutoGetMoney = false
+    end
+end)
+
+local moneyAmount = ""
+
+Section:NewTextBox("Set Money Amount", "Enter the amount of money", function(txt)
+    moneyAmount = txt
+    print("Money Amount Set To: " .. moneyAmount)
+end)
+
+Section:NewButton("Give Money", "Get money from TextBox", function()
+    if tonumber(moneyAmount) then
+        local args = {
+            [1] = moneyAmount
+        }
+ 
+        game:GetService("ReplicatedStorage"):WaitForChild("CratesUtilities"):WaitForChild("Remotes"):WaitForChild("GiveReward"):FireServer(unpack(args))
+    else
+        print("Invalid Amount Entered")
+    end
+end)
+
+Section:NewButton("Remove Money", "Remove money from TextBox", function()
+    if tonumber(moneyAmount) then
+        local args = {
+            [1] = "-" .. moneyAmount
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("CratesUtilities"):WaitForChild("Remotes"):WaitForChild("GiveReward"):FireServer(unpack(args))
+        print("Money Removed: " .. moneyAmount)
+    else
+        print("Invalid Amount Entered")
+    end
+end)
+
+
+
+local Section = Tab:NewSection("Main Function")
+
+local correctFolder = workspace.Glasses.Correct
+local wrongFolder = workspace.Glasses.Wrong
+
+local originalColors = {}
+
+local function saveOriginalColors(folder)
+    for _, part in pairs(folder:GetDescendants()) do
+        if part:IsA("BasePart") then
+            originalColors[part] = part.BrickColor -- บันทึก BrickColor เดิม
+        end
+    end
+end
+
+saveOriginalColors(correctFolder)
+saveOriginalColors(wrongFolder)
+
+Section:NewToggle("Change Glasses Colors", "Toggle to change Glasses colors", function(state)
+    if state then
+        for _, part in pairs(correctFolder:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.BrickColor = BrickColor.new("Bright green")
+            end
+        end
+
+        for _, part in pairs(wrongFolder:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.BrickColor = BrickColor.new("Bright red")
+            end
+        end
+
+    else
+        
+        for _, part in pairs(correctFolder:GetDescendants()) do
+            if part:IsA("BasePart") and originalColors[part] then
+                part.BrickColor = originalColors[part]
+            end
+        end
+
+        for _, part in pairs(wrongFolder:GetDescendants()) do
+            if part:IsA("BasePart") and originalColors[part] then
+                part.BrickColor = originalColors[part]
+            end
+        end
+    end
+end)
+
+Section:NewButton("GOLD HELICOPTER", "Get GOLD HELICOPTER", function()
+    local args = {
+    [1] = game:GetService("Players").LocalPlayer
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("HeliEvents"):WaitForChild("remote1"):FireServer(unpack(args))
+
+end)
+
+Section:NewButton("GOLD SUPER CAR", "Get GOLD SUPER CAR", function()
+    local args = {
+    [1] = game:GetService("Players").LocalPlayer
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Car_Prompt"):FireServer(unpack(args))
+
+
+end)
+
+
+local Tab = Window:NewTab("Setting")
+
+local Section = Tab:NewSection("Setting")
+
+Section:NewKeybind("Toggle UI", "Change you key", Enum.KeyCode.LeftControl, function()
+	Library:ToggleUI()
+end)
+
+Section:NewButton("Teleport To lower server", "Teleport To lower pleyer in server", function()
+    local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+
+local placeId = game.PlaceId
+local maxAttempts = 10
+local smallestServerId = nil
+local leastPlayers = math.huge
+
+local function findSmallestServer()
+    local cursor = ""
+    for attempt = 1, maxAttempts do
+        local url = "https://games.roblox.com/v1/games/" .. placeId .. "/servers/Public?sortOrder=Asc&limit=100&cursor=" .. cursor
+        local success, response = pcall(function()
+            return HttpService:JSONDecode(game:HttpGet(url))
+        end)
+        if success and response and response.data then
+            for _, server in pairs(response.data) do
+                if server.playing < leastPlayers and server.id ~= game.JobId then
+                    leastPlayers = server.playing
+                    smallestServerId = server.id
+                end
+            end
+            if not response.nextPageCursor then
+                break
+            end
+            cursor = response.nextPageCursor
+        else
+            warn("Finding server " .. attempt)
+        end
+    end
+end
+
+findSmallestServer()
+
+if smallestServerId then
+    TeleportService:TeleportToPlaceInstance(placeId, smallestServerId, game.Players.LocalPlayer)
+else
+    warn("Server is not READY")
+end
+
+end)
+
+
+
